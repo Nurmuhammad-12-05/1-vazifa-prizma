@@ -1,0 +1,28 @@
+import "dotenv/config";
+import express from "express";
+import prisma from "./config/prisma.js";
+import Routes from "./routes/routes.js";
+import ErrorMiddleware from "./middlewares/error.niddleware.js";
+
+const app = express();
+
+app.use(express.json());
+app.use("/api", Routes());
+app.use(ErrorMiddleware);
+
+const PORT = process.env.PORT;
+
+const initApp = async () => {
+  try {
+    await prisma.$connect();
+    console.log("Database connected.");
+
+    app.listen(PORT, () => {
+      console.log("Server is ranning", PORT);
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+initApp();
