@@ -10,7 +10,7 @@ app.use(express.json())
 app.use('/api', Routes())
 app.use(ErrorMiddleware)
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
 
 const initApp = async () => {
   try {
